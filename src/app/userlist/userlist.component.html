@@ -1,0 +1,173 @@
+<!-- <mat-card class="card-width">
+  <mat-card-content>
+    <div class="table-responsive">
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <div class="md-form">
+            <label for="search">Search</label>
+            <button
+              mat-raised-button
+              (click)="openDialog()"
+              color="primary"
+              class="margin-add-user"
+            >
+              Add User
+            </button>
+            <input
+              type="text"
+              [(ngModel)]="searchText"
+              class="form-control"
+              id="search"
+            />
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">IsActive</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let user of users | customFilter: searchText; let i = index"
+          >
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.enabled }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <app-custom-pagination
+        (pageChange)="page = $event"
+        id="1"
+        maxSize="5"
+        directionLinks="true"
+        autoHide="true"
+      >
+      </app-custom-pagination>
+    </div> </mat-card-content
+></mat-card> -->
+<mat-card class="card-width">
+  <mat-card-content>
+    <div class="mat-elevation-z8">
+      <div style="margin-left: 30px;">
+        <mat-form-field>
+          <input
+            matInput
+            (keyup)="applyFilter($event.target.value)"
+            placeholder="Filter"
+          />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          (click)="openDialog()"
+          class="pad15 buttonColor margin-add-user"
+        >
+          Add User
+        </button>
+
+        <!-- <button
+          mat-raised-button
+          (click)="editUser($event)"
+          class="pad15 buttonColor margin-del-user"
+        >
+          Edit User
+        </button> -->
+
+        <button
+          mat-raised-button
+          (click)="deleteUser()"
+          class="pad15 buttonColor margin-del-user"
+        >
+          Delete User
+        </button>
+      </div>
+
+      <table mat-table [dataSource]="dataSource">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              [aria-label]="checkboxLabel()"
+            >
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+              [aria-label]="checkboxLabel(row)"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstname">
+          <th mat-header-cell *matHeaderCellDef>First Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastname">
+          <th mat-header-cell *matHeaderCellDef>Last Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>Role</th>
+          <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+        </ng-container>
+        <ng-container matColumnDef="phoneNumber">
+          <th mat-header-cell *matHeaderCellDef>Role</th>
+          <td mat-cell *matCellDef="let element">{{ element.phoneNumber }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.email }}
+            <div style="float: right">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="editUser(element.email)">
+                  Edit
+                </button>
+                <button mat-menu-item (click)="deleteUserSingle(element.email)">
+                  Delete
+                </button>
+              </mat-menu>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>

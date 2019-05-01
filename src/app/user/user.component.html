@@ -1,0 +1,139 @@
+<mat-card class="card-width">
+  <mat-card-header>
+    <mat-card-title>User Registration</mat-card-title>
+  </mat-card-header>
+  <div class="alert alert-success" role="alert" *ngIf="show">
+    {{ successMessage }}
+  </div>
+  <mat-card-content>
+    <form class="example-form">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                placeholder="FirstName"
+                [(ngModel)]="user.firstName"
+                name="First Name"
+                required
+                name="firstName"
+              />
+              <mat-error *ngIf="formControl.hasError('required')">
+                First name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                placeholder="lastname"
+                [(ngModel)]="user.lastName"
+                name="Last Name"
+                required
+              />
+              <mat-error *ngIf="formControl.hasError('required')">
+                Last name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                placeholder="email"
+                [(ngModel)]="user.email"
+                name="Email"
+                required
+              />
+              <mat-error *ngIf="formControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                placeholder="password"
+                [(ngModel)]="user.password"
+                type="password"
+                name="Password"
+                required
+              />
+              <mat-error *ngIf="formControl.hasError('required')">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <mat-label>Role</mat-label>
+              <mat-select
+                [(value)]="selected"
+                [(ngModel)]="user.role"
+                name="Role"
+              >
+                <mat-option
+                  *ngFor="let role of roles"
+                  [value]="role.value"
+                  placeholder="role"
+                >
+                  {{ role.viewValue }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formControl.hasError('required')">
+                Role is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <section class="example-section">
+              <mat-checkbox
+                class="example-margin"
+                [(ngModel)]="user.enabled"
+                name="IsActive"
+                >IsActive</mat-checkbox
+              >
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                placeholder="phonenumber"
+                [(ngModel)]="user.phoneNumber"
+                name="Phone #"
+                required
+              />
+              <mat-error *ngIf="formControl.hasError('required')">
+                Phone # is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button (click)="save(user)" class="pad15 buttonColor">
+      Save
+    </button>
+  </mat-card-actions>
+</mat-card>
