@@ -63,17 +63,19 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.formEditMode = this.data;
 
-    console.log("this.data.email", this.data.email);
+    console.log("this.data", this.data);
 
-    this._service
-      .getUser(this.data.email, this.loginUser.token)
-      .subscribe(response => (this.user = response));
+    if (this.data != null) {
+      console.log("this.data.email", this.data.email);
+
+      this._service
+        .getUser(this.data.email, this.loginUser.token)
+        .subscribe(response => (this.user = response));
+    }
   }
 
   save(user: any) {
     console.log("user", user);
-
-    // console.log("user", user);
 
     this._service.saveuser(user).subscribe(response => {
       if (response) {

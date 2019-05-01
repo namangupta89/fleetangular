@@ -100,6 +100,7 @@ export class UserlistComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log("The dialog was closed");
       this.selection = new SelectionModel(true, []);
+      this.ngOnInit();
       //this.animal = result;
     });
   }
