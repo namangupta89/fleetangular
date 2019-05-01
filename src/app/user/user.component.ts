@@ -63,8 +63,6 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.formEditMode = this.data;
 
-    console.log("this.data", this.data);
-
     if (this.data != null) {
       console.log("this.data.email", this.data.email);
 

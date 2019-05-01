@@ -68,7 +68,7 @@ export class UserlistComponent implements OnInit {
       console.log("The dialog was closed");
       //      this.ngOnInit();
       this.selection = new SelectionModel(true, []);
-
+      this.ngOnInit();
       //this.animal = result;
     });
   }
@@ -122,13 +122,15 @@ export class UserlistComponent implements OnInit {
       this.selection.isSelected(row) ? "deselect" : "select"
     } row ${row.position + 1}`;
   }
-  deleteUser(record) {
-    this._service
-      .deleteUser(this.selection.selected, this.loginUser.token)
-      .subscribe(response => {
-        console.log(response);
-        this.ngOnInit();
-        this.selection = new SelectionModel(true, []);
-      });
+  deleteUser() {
+    if (this.selection.selected.length >= 1)
+      this._service
+        .deleteUser(this.selection.selected, this.loginUser.token)
+        .subscribe(response => {
+          console.log(response);
+          this.ngOnInit();
+          this.selection = new SelectionModel(true, []);
+        });
+    else console.log("Please select the record first!");
   }
 }
